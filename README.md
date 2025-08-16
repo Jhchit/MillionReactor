@@ -9,10 +9,10 @@ MillionReactor
 基于Linux Socket API（socket()/bind()/listen()/accept()）实现完整的TCP服务端，通过SOCK_NONBLOCK标志和accept4()系统调用实现非阻塞Socket，避免传统fcntl()调用的额外开销，通过SO_REUSEADDR解决端口复用问题，TCP_NODELAY优化小包传输延迟
 
 3，高性能连接管理
-采用智能指针（shared_ptr）管理Connection生命周期，实现自动资源回收；通过红黑树（std::map）维护活跃连接，支持O(1)查找。集成心跳机制与超时检测（Timerfd），能自动清理空闲连接。
+采用智能指针（shared_ptr）管理Connection生命周期，实现自动资源回收；通过红黑树（std::map）维护活跃连接。集成心跳机制与超时检测（Timerfd），能自动清理空闲连接。
 
 4，线程池优化
-实现工作线程池（ThreadPool）处理业务逻辑，与IO线程解耦，QPS 提升至100万。支持动态调整线程数量，CPU利用率达85%。
+实现工作线程池（ThreadPool）处理业务逻辑，与IO线程解耦，任务队列采用多生产者-单消费者模型，通过std::mutex保证线程安全，QPS 提升至100万。支持动态调整线程数量，CPU利用率达85%。
 
 5，协议与缓冲区设计
 自定义二进制协议（头部长度+内容），实现零拷贝缓冲区（Buffer类），支持高效报文拼接与拆分。提供XML解析接口（如getxmlbuffer），支持业务层快速开发。
