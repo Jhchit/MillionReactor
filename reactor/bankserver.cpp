@@ -1,7 +1,3 @@
-/*
- * 程序名：bankserver.cpp，网上银行（BankServer）服务器。
- * 作者：吴从周
-*/
 #include <signal.h>
 #include "BankServer.h"
 
